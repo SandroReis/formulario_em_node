@@ -1,24 +1,24 @@
 const express = require("express");
 const app = express();
+const handlebars = require('express-handlebars')
+const Sequelize = require('sequelize')
 
-app.get("/", function(req, res){
-    res.sendFile(__dirname + "/html/index.html");
+
+//Config
+//template Engine
+app.engine('handlebars', handlebars({ defaltLayout: 'main' }))
+app.set('view engine', 'handlebars')
+
+//Conexão com o banco de Dados Mysql
+const sequelize = new Sequelize('teste', 'root', 'root', {
+    host: "localhost",
+    dialect: 'mysql'
 })
 
-app.get('/ola/:nome',function(req,res){
-    res.send("<h1>ola " + req.params.nome + "</h1>");
-})
-
-app.get("/sobre", function(req,res){
-    res.sendFile(__dirname +"/html/sobre.html")
-})
 
 
-app.get("/blog", function(req,res){
-    res.send("minha pagina blog");
-})
 
-app.listen(8081,function(){
-console.log("servidor rodando!");
+app.listen(8081, function () {
+    console.log("servidor rodando!");
 });
 //localhost:8081
